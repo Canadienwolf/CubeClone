@@ -75,7 +75,7 @@ ehthumbs.db
 Thumbs.db
 
 
-CubeClone/Library/ArtifactDB
+
 
 CubeClone/Temp/UnityLockfile
 
@@ -86,3 +86,5 @@ CubeClone/Library/SourceAssetDB
 CubeClone/Library/ShaderCache/EditorEncounteredVariants
 
 *.dwlt
+
+*.json
