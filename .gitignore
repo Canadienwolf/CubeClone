@@ -10,7 +10,7 @@
 [Ll]ogs/
 [Mm]emoryCaptures/
 Temp/
-Library/
+*.Library/
 
 # Never ignore Asset meta data
 !/[Aa]ssets/**/*.meta
@@ -82,3 +82,5 @@ CubeClone/Temp/UnityLockfile
 CubeClone/Library/SourceAssetDB
 
 *.log
+
+CubeClone/Library/ShaderCache/EditorEncounteredVariants
