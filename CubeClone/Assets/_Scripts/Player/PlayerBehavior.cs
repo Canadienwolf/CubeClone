@@ -8,16 +8,23 @@ public class PlayerBehavior : MonoBehaviour
     public float moveSpeed = 10f;
     public float gravityForce = -9.8f;
     public float jumpHeight = 2f;
+    public float groundCheckDist = 0.2f;
     public Camera cam;
+    public bool cursorVisible;
 
     CharacterController charCtrl;
     PlayerInput pInput = new PlayerInput();
 
-    private float vertVel;
+    [SerializeField] private float vertVel;
 
     void Start()
     {
         charCtrl = GetComponent<CharacterController>();
+        if (!cursorVisible)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
     }
 
     void Update()
@@ -25,17 +32,19 @@ public class PlayerBehavior : MonoBehaviour
         Jump();
         Move();
 
+        print(Grounded());
+
         transform.rotation = Quaternion.Euler(0, cam.transform.rotation.eulerAngles.y, 0);
     }
 
     void Jump()
     {
-        if (charCtrl.isGrounded && vertVel < 0)
+        if (Grounded() && vertVel < 0)
         {
             vertVel = -2;
         }
 
-        if (pInput.Jump(charCtrl.isGrounded))
+        if (pInput.Jump(Grounded()))
         {
             vertVel = Mathf.Sqrt(jumpHeight * -2 * gravityForce);
         }
@@ -51,5 +60,10 @@ public class PlayerBehavior : MonoBehaviour
         {
             charCtrl.Move(transform.TransformDirection(pInput.MoveDirection()) * Time.deltaTime * moveSpeed);
         }
+    }
+
+    bool Grounded()
+    {
+        return Physics.CheckSphere(transform.position + new Vector3(0, charCtrl.radius - (groundCheckDist * 2), 0), charCtrl.radius - groundCheckDist, ~gameObject.layer);
     }
 }
