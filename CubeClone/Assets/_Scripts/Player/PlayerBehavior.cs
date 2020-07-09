@@ -15,7 +15,7 @@ public class PlayerBehavior : MonoBehaviour
     CharacterController charCtrl;
     PlayerInput pInput = new PlayerInput();
 
-    [SerializeField] private float vertVel;
+    private float vertVel;
 
     void Start()
     {
@@ -31,8 +31,6 @@ public class PlayerBehavior : MonoBehaviour
     {
         Jump();
         Move();
-
-        print(Grounded());
 
         transform.rotation = Quaternion.Euler(0, cam.transform.rotation.eulerAngles.y, 0);
     }
@@ -56,14 +54,11 @@ public class PlayerBehavior : MonoBehaviour
 
     void Move()
     {
-        if (pInput.IsMoving())
-        {
-            charCtrl.Move(transform.TransformDirection(pInput.MoveDirection()) * Time.deltaTime * moveSpeed);
-        }
+        charCtrl.Move(transform.TransformDirection(pInput.MoveDirection()) * Time.deltaTime * moveSpeed);
     }
 
     bool Grounded()
     {
-        return Physics.CheckSphere(transform.position + new Vector3(0, charCtrl.radius - (groundCheckDist * 2), 0), charCtrl.radius - groundCheckDist, ~gameObject.layer);
+        return Physics.CheckSphere(transform.position, groundCheckDist, ~gameObject.layer);
     }
 }
