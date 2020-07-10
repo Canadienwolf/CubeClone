@@ -57,7 +57,7 @@ public class PlayerBehavior : MonoBehaviour
         charCtrl.Move(transform.TransformDirection(pInput.MoveDirection()) * Time.deltaTime * moveSpeed);
     }
 
-    bool Grounded()
+    public bool Grounded()
     {
         return Physics.CheckSphere(transform.position, groundCheckDist, ~gameObject.layer);
     }
