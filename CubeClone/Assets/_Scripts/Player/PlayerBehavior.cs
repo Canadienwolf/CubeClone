@@ -8,7 +8,7 @@ public class PlayerBehavior : MonoBehaviour
     public float moveSpeed = 10f;
     public float gravityForce = -9.8f;
     public float jumpHeight = 2f;
-    public float groundCheckDist = 0.2f;
+    public Vector3 groundCheckDist;
     public Camera cam;
     public bool cursorVisible;
 
@@ -59,6 +59,12 @@ public class PlayerBehavior : MonoBehaviour
 
     public bool Grounded()
     {
-        return Physics.CheckSphere(transform.position, groundCheckDist, ~gameObject.layer);
+        return Physics.CheckBox(transform.position, groundCheckDist, Quaternion.identity, ~gameObject.layer);
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireCube(transform.position, groundCheckDist);
     }
 }
