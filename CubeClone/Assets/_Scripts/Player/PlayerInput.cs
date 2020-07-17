@@ -14,6 +14,11 @@ public class PlayerInput
         return MoveDirection() != Vector3.zero;
     }
 
+    public bool IsRunning()
+    {
+        return IsMoving() && Input.GetKey(KeyCode.LeftShift);
+    }
+
     public bool Jump(bool grounded)
     {
         return grounded && Input.GetKeyDown("space");

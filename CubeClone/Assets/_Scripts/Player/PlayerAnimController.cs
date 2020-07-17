@@ -11,9 +11,13 @@ public class PlayerAnimController : MonoBehaviour
 
     private void Update()
     {
-        anim.SetFloat("VelX", input.MoveDirection().x);
-        anim.SetFloat("VelY", input.MoveDirection().z);
+        int runMultiplier = input.IsRunning() ? 2 : 1;
+
+        anim.SetFloat("VelX", input.MoveDirection().x * runMultiplier);
+        anim.SetFloat("VelY", input.MoveDirection().z * runMultiplier);
         anim.SetBool("Grounded", playerBehavior.Grounded());
+        if (input.Attack() && playerBehavior.Grounded())
+            anim.SetTrigger("Attack_Light");
         if (input.Jump(playerBehavior.Grounded()))
             anim.SetTrigger("Jump");
     }

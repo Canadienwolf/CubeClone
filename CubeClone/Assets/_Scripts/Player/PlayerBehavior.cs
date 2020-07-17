@@ -5,7 +5,8 @@ using UnityEngine;
 [RequireComponent(typeof(CharacterController))]
 public class PlayerBehavior : MonoBehaviour
 {
-    public float moveSpeed = 10f;
+    public float walkSpeed = 3f;
+    public float runSpeed = 12f;
     public float gravityForce = -9.8f;
     public float jumpHeight = 2f;
     public Vector3 groundCheckDist;
@@ -16,6 +17,7 @@ public class PlayerBehavior : MonoBehaviour
     PlayerInput pInput = new PlayerInput();
 
     private float vertVel;
+    private float currentSpeed;
 
     void Start()
     {
@@ -54,7 +56,9 @@ public class PlayerBehavior : MonoBehaviour
 
     void Move()
     {
-        charCtrl.Move(transform.TransformDirection(pInput.MoveDirection()) * Time.deltaTime * moveSpeed);
+        currentSpeed = pInput.IsRunning() ? runSpeed : walkSpeed;
+
+        charCtrl.Move(transform.TransformDirection(pInput.MoveDirection().normalized) * Time.deltaTime * currentSpeed);
     }
 
     public bool Grounded()
